@@ -1,0 +1,58 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Game",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c", "src/main.cpp",
+                "-o", "main.o",
+                "-I", "libs/glfw/include",
+                "-I", "libs/glad/include",
+                "-I", "libs/glm"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Build GLAD",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c", "libs/glad/src/glad.c",
+                "-o", "glad.o",
+                "-I", "libs/glad/include"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Link Game",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "main.o",
+                "glad.o",
+                "-o", "game.exe",
+                "-L", "libs/glfw/lib-mingw-w64",
+                "-lglfw3",
+                "-lopengl32",
+                "-lgdi32",
+                "-luser32",
+                "-lkernel32"
+            ],
+            "group": "build",
+            "dependsOn": ["Build Game", "Build GLAD"]
+        },
+        {
+            "label": "Build All",
+            "dependsOn": ["Link Game"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
