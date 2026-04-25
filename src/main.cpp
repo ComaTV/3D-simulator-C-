@@ -7,7 +7,6 @@ static void errorCallback(int error, const char* description) {
     std::cerr << "GLFW Error [" << error << "]: " << description << std::endl;
 }
 
-// Shader source code
 const char* vertexShaderSource = R"(
 #version 330 core
 layout (location = 0) in vec3 aPos;
@@ -39,7 +38,7 @@ GLuint createShader(GLenum type, const char* source) {
     int success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        char infoLog[512];
+        char infoLog[510];
         glGetShaderInfoLog(shader, 512, NULL, infoLog);
         std::cerr << "Shader compilation failed: " << infoLog << std::endl;
         return 0;
@@ -87,7 +86,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     std::cout << "Creating window..." << std::endl;
-    GLFWwindow* window = glfwCreateWindow(800, 600, "My 3D Game", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "My shit 67", NULL, NULL);
     if (!window) {
         std::cout << "Window creation failed!" << std::endl;
         glfwTerminate();
@@ -113,7 +112,6 @@ int main() {
         return -1;
     }
 
-    // Vertex data for a triangle (position + color)
     float vertices[] = {
         // positions         // colors
          0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // top vertex (red)
@@ -121,7 +119,6 @@ int main() {
          0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // bottom right (blue)
     };
 
-    // Create VAO and VBO
     GLuint VAO, VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -130,11 +127,9 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // Position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     
-    // Color attribute
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
@@ -144,7 +139,6 @@ int main() {
         glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        // Draw the triangle
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -153,7 +147,6 @@ int main() {
         glfwPollEvents();
     }
 
-    // Cleanup
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);

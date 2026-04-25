@@ -1,5 +1,5 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     'src/main'
+binary-path:     '/Users/denisradu/Projects/3D-simulator-C-/src/main'
 relocations:     []
 ...
